@@ -1,5 +1,5 @@
 <template>
-    
+
     <div>
         <v-app-bar app>
         <!--  -->
@@ -12,7 +12,7 @@
             <!-- Provides the application the proper gutter -->
             <v-container fluid>
                 <div class="container">
-                    <img :src="imgSrc" /> 
+                    <img :src="imgSrc" />
                 </div>
             </v-container>
         </v-main>
@@ -20,32 +20,30 @@
 </template>
 <script>
 
-
 export default {
-    name: 'ScreenSaver',
-    data: () => {
-        return {
-            nonsenseNoCacheKey: -1
-        }        
+  name: 'ScreenSaver',
+  data: () => ({
+    nonsenseNoCacheKey: -1,
+  }),
+  computed: {
+    imgSrc() {
+      const src = `${this.$API_BASE_URL}/img/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
+      return src;
     },
-    computed: {
-        imgSrc() {
-            const src = this.$API_BASE_URL + "/img/screensaver_image.jpg?" + this.nonsenseNoCacheKey;
-            return src;
-        },
-     },
-    methods: {
-        updateNonsenseNoCacheKey() {
-            this.nonsenseNoCacheKey = new Date().getTime();
-        }
+  },
+  methods: {
+    updateNonsenseNoCacheKey() {
+      this.nonsenseNoCacheKey = new Date().getTime();
     },
-    mounted() {
-        this.intervalUpdateNonsenseNoCacheKey = setInterval(this.updateNonsenseNoCacheKey, this.$SCREENSAVER_SWITCH_INTERVAL_MS);
-    },
-    beforeDestroy() {
-        clearInterval( this.intervalUpdateNonsenseNoCacheKey );
-    }
-}
+  },
+  mounted() {
+    this.intervalUpdateNonsenseNoCacheKey =
+      setInterval(this.updateNonsenseNoCacheKey, this.$SCREENSAVER_SWITCH_INTERVAL_MS);
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalUpdateNonsenseNoCacheKey);
+  },
+};
 </script>
 <style scoped>
 
@@ -53,14 +51,14 @@ export default {
         padding: 0;
         margin: 0;
     }
-    
+
     .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
-    
+
     @media (max-width: 400px) {
         .container {
             width: 100%;

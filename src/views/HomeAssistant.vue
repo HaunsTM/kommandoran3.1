@@ -6,30 +6,29 @@
 
         <!-- Provides the application the proper gutter -->
         <v-container fluid>
-                  <div class="iframe-container">
-                      <iframe src="http://10.0.0.6:8123" title="Home Assistant"></iframe>
-                  </div>
+          <div class="iframe-container">
+              <iframe src="http://10.0.0.6:8123" title="Home Assistant"></iframe>
+          </div>
         </v-container>
       </v-main>
     </div>
 </template>
 
 <script>
-  export default {
-    name: 'HomeAssistant',
+export default {
+  name: 'HomeAssistant',
 
-  }
+};
 </script>
 
-
 <style scope>
-	.iframe-container {
+  .iframe-container {
         position: relative;
         overflow: hidden;
         padding-top: calc(100vh - 90px);
         width: 100%;
         border: 1px solid black;
-        
+
     }
     .iframe-container iframe {
         position: absolute;
@@ -39,6 +38,6 @@
         right: 0;
         min-width: 100vw;
         min-height: 100vh;
-        
+
     }
 </style>
