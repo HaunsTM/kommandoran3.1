@@ -1,3 +1,5 @@
+import Vue from 'vue/types/umd';
+
 <template>
 
     <div>
@@ -12,38 +14,42 @@
             <!-- Provides the application the proper gutter -->
             <v-container fluid>
                 <div class="container">
-                    <img :src="imgSrc" />
+                    <img :src="imgSrc()" />
+                    {{imgSrc()}}
                 </div>
             </v-container>
         </v-main>
     </div>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 
-export default {
-  name: 'ScreenSaver',
-  data: () => ({
-    nonsenseNoCacheKey: -1,
-  }),
-  computed: {
-    imgSrc() {
-      const src = `${this.$API_BASE_URL}/img/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
-      return src;
+@Component({
+    components: {
     },
-  },
-  methods: {
-    updateNonsenseNoCacheKey() {
-      this.nonsenseNoCacheKey = new Date().getTime();
+    computed: {
+        ...mapGetters({
+
+        }),
     },
-  },
-  mounted() {
-    this.intervalUpdateNonsenseNoCacheKey =
-      setInterval(this.updateNonsenseNoCacheKey, this.$SCREENSAVER_SWITCH_INTERVAL_MS);
-  },
-  beforeDestroy() {
-    clearInterval(this.intervalUpdateNonsenseNoCacheKey);
-  },
-};
+})
+export default class ScreenSaver extends Vue {
+    private nonsenseNoCacheKey = -1;
+
+    private apiBaseUrl(): string {
+        const apiBaseUrl = this.$store.getters.getApiBaseUrl;
+        return apiBaseUrl;
+
+    }
+    private imgSrc(): string {
+        const src = `${this.apiBaseUrl()}/local/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
+        return src;
+    }
+    private updateNonsenseNoCacheKey(): void {
+        this.nonsenseNoCacheKey = new Date().getTime();
+    }
+}
 </script>
 <style scoped>
 

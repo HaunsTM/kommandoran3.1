@@ -14,16 +14,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Component, Vue } from 'vue-property-decorator';
+import DataService from './api/DataService';
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 
-export default Vue.extend({
-  name: 'App',
+@Component({
+    components: {
+    },
+})
+export default class App extends Vue {
 
-  components: {
-  },
-
-  data: () => ({
-    //
-  }),
-});
+    private enterScreenSaverMode(): boolean {
+         return this.$store.getters.enterScreenSaverMode;
+    }
+}
 </script>
+

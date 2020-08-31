@@ -15,8 +15,19 @@
 </template>
 
 <script>
-export default {
-  name: 'HomeAssistant',
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+
+@Component({
+    components: {
+    },
+    computed: {
+        ...mapGetters({
+
+        }),
+    },
+})
+export default class HomeAssistant extends Vue {
 
 };
 </script>
