@@ -15,7 +15,6 @@ import Vue from 'vue/types/umd';
             <v-container fluid>
                 <div class="container">
                     <img :src="imgSrc()" />
-                    {{imgSrc()}}
                 </div>
             </v-container>
         </v-main>
@@ -30,7 +29,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
     },
     computed: {
         ...mapGetters({
-
+ 
         }),
     },
 })
