@@ -29,24 +29,28 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
     },
     computed: {
         ...mapGetters({
- 
+            apiBaseUrl: 'apiBaseUrl'
         }),
     },
 })
 export default class ScreenSaver extends Vue {
     private nonsenseNoCacheKey = -1;
+    private idTimer = -1;
+    private apiBaseUrl!: string;
 
-    private apiBaseUrl(): string {
-        const apiBaseUrl = this.$store.getters.getApiBaseUrl;
-        return apiBaseUrl;
-
-    }
     private imgSrc(): string {
-        const src = `${this.apiBaseUrl()}/local/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
+        const src = `${this.apiBaseUrl}/local/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
         return src;
     }
     private updateNonsenseNoCacheKey(): void {
         this.nonsenseNoCacheKey = new Date().getTime();
+    }
+    
+    mounted() {
+        this.idTimer = setInterval(this.updateNonsenseNoCacheKey, 1000);
+    }
+    beforeDestroy() {
+        clearInterval( this.idTimer );
     }
 }
 </script>

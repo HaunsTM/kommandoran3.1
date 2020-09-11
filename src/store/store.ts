@@ -9,7 +9,7 @@ export default new Vuex.Store({
     enterScreenSaverMode: false
   },
   getters: {
-    getApiBaseUrl: state => {
+    apiBaseUrl: state => {
         return state.apiBaseUrl;
     }
   },

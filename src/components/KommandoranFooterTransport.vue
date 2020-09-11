@@ -49,14 +49,16 @@
     </article>
 </template>
 
-<script>
+<script lang="ts">
 
-export default {
-    name: 'KommandoranFooterTransport',
-    props: {
-        'transportData': Object,
-        'mediaWidthMoreThan400px': Boolean
-    }
+
+import { Component, Prop, Vue } from 'vue-property-decorator';
+@Component({
+    components: {
+    },
+})
+export default class KommandoranFooterTransport extends Vue {
+    
 }
 </script>
 

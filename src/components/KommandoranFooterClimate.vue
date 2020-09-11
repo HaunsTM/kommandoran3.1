@@ -52,16 +52,16 @@
     </v-carousel>
 </template>
 
-<script>
+<script lang="ts">
 
-export default {
-    name: 'KommandoranFooterClimate',
-    props: {
-        'climate': Object,
-        'mediaWidthMoreThan400px': Boolean
-    }
+import { Component, Prop, Vue } from 'vue-property-decorator';
+@Component({
+    components: {
+    },
+})
+export default class KommandoranFooterClimate extends Vue {
+    
 }
-
 </script>
 
 <style scope>

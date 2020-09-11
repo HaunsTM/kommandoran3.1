@@ -138,41 +138,15 @@
             
     </article> 
 </template>
-<script>
+<script lang="ts">
 
-export default {
-    name: 'KommandoranFooterTransportDetails',
-    props: {
-        'transportData': Object
+import { Component, Prop, Vue } from 'vue-property-decorator';
+@Component({
+    components: {
     },
-    data () {
-        return {
-            transportHeaders: [
-                {
-                    text: 'Line',
-                    align: 'center',
-                    value: 'Name'
-                },
-                {
-                    text: 'Departure', 
-                    align: 'center',
-                    value: 'JourneyTime'
-                }
-            ]
-        }
-    },    
-    computed: {
-        transportsToLund() {
-            return this.transportData['Lund'];
-        },
-        transportsToMalmo() {
-            return this.transportData['Malmö'];
-        },
-    },
+})
+export default class KommandoranFooterTransportDetails extends Vue {
     
-    methods: {
-
-    }
 }
 
 </script>

@@ -7,7 +7,7 @@
         class="text-center"
         cols="12"
       >
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        <kommandoran-footer />
       </v-col>
     </v-footer>
   </v-app>
@@ -18,10 +18,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import DataService from './api/DataService';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 
+
+import KommandoranFooter from '@/components/KommandoranFooter.vue';
+
 import { OnIdle, OnActive } from 'vue-plugin-helper-decorator';
 
 @Component({
     components: {
+      KommandoranFooter
     },
 })
 export default class App extends Vue {
@@ -32,7 +36,6 @@ export default class App extends Vue {
   private navigateTo(routeName: string): void {
       this.$router.push({ name: routeName })
       
-    console.log(routeName)
 		}
     
   @OnIdle()
@@ -43,6 +46,9 @@ export default class App extends Vue {
   @OnActive()
   public whenActive() {
 		this.navigateTo('HomeAssistant');
+  }
+   private created(): void {
+    console.log('propertyComputed will update, as this.property is now reactive.')
   }
 }
 </script>

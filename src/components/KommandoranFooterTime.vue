@@ -13,49 +13,49 @@
                 </div>
             </div>
             <div class="flex-container">
-                    {{currentDate}}
+                {{currentDate}}
             </div>
         </div>
     </article>
 
 </template>
 
-<script>
+<script lang="ts">
+
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import moment from "moment";
-import localization from 'moment/locale/sv';
+import 'moment/locale/sv';
 
-
-export default {
-    name: 'KommandoranFooterTime',
-    data: () => ({
-        currentDate : "",
-        currentTime : ""
-    }),
-    methods: {         
-        calculateDate: function() {
-            this.currentDate = this.momentLocalized().format('L');
-        },
-        calculateTime: function() {            
-            this.currentTime = this.momentLocalized().format('LT');
-        },
-        momentLocalized: () => {
-            let momentLocalized = moment().locale("sv", localization);
-            return momentLocalized;
-        },
-        setLoadingState(data) {
-            this.loading = data.isLoading;
-            this.loadingError=JSON.stringify(data.error);
-        }
+@Component({
+    components: {
     },
-    mounted() {
+})
+export default class KommandoranFooterTime extends Vue {
+    private currentDate = "";
+    private currentTime = "";
+
+    private intervalCalculateTime!: number;
+    private intervalCalculateDate!: number;
+
+   private momentLocalized(): moment.Moment {
+        const momentLocalized = moment().locale("sv");
+        return momentLocalized;
+    }
+    private calculateDate(): void {
+        this.currentDate = this.momentLocalized().format('L');
+    }
+    private calculateTime(): void {
+        this.currentTime = this.momentLocalized().format('LT');
+    }
+    private mounted(): void {
         this.calculateTime();
         this.calculateDate();
 
-        this.intervalCalculateTime = setInterval(this.calculateTime, 1*1000);
-        this.intervalCalculateDate = setInterval(this.calculateDate, 1*1000);
-    },
-    beforeDestroy() {
+        this.intervalCalculateTime = setInterval(this.calculateTime, 1);
+        this.intervalCalculateDate = setInterval(this.calculateDate, 1);
+    }
+    private beforeDestroy(): void {
         clearInterval(this.intervalCalculateTime);
         clearInterval(this.intervalCalculateDate);
     }
