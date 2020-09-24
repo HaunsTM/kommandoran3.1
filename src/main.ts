@@ -4,7 +4,6 @@ import router from './router';
 import store from './store/store';
 import vuetify from './plugins/vuetify';
 import IdleVue from 'idle-vue';
-import VueMqtt from 'vue-mqtt';
 
 Vue.config.productionTip = false;
 
@@ -18,10 +17,7 @@ Vue.use(IdleVue, {
   eventEmitter: eventsHub,
   store });
 
-Vue.use(VueMqtt, 'mqtt://10.0.0.6:1883', {
-    username: 'nodered',
-    password: 'hEl10'
-  });
+
 
 new Vue({
   router,

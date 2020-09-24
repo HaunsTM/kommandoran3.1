@@ -35,8 +35,8 @@ export default class KommandoranFooterTime extends Vue {
     private currentDate = "";
     private currentTime = "";
 
-    private intervalCalculateTime!: number;
-    private intervalCalculateDate!: number;
+    private intervalCalculateTime!: NodeJS.Timeout;
+    private intervalCalculateDate!: NodeJS.Timeout;
 
    private momentLocalized(): moment.Moment {
         const momentLocalized = moment().locale("sv");

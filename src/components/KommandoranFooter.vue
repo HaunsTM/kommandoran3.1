@@ -50,7 +50,7 @@ export default class KommandoranFooter extends Vue {
         justify-content: space-between;
     }
     footer {
-        font-size: 1rem;
+        font-size: 0.8rem;
         line-height: 1.1rem;
         width: 100%;
         padding: 0 0.3rem 0 0.3rem;
@@ -59,7 +59,6 @@ export default class KommandoranFooter extends Vue {
         display: flex;
         flex-direction: column;
         margin-bottom: -4px;
-        border-bottom: 2px solid blue;
 
         height: 32px;
     }

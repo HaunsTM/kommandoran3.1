@@ -35,7 +35,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 })
 export default class ScreenSaver extends Vue {
     private nonsenseNoCacheKey = -1;
-    private idTimer = -1;
+    private idTimer!: NodeJS.Timeout;
     private apiBaseUrl!: string;
 
     private imgSrc(): string {

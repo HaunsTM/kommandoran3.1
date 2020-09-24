@@ -8,12 +8,13 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "async-mqtt": "^2.6.1",
     "core-js": "^3.6.5",
     "idle-vue": "^2.0.5",
     "moment": "^2.27.0",
+    "mqtt": "^4.2.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
-    "vue-mqtt": "^2.0.3",
     "vue-plugin-helper-decorator": "^0.0.12",
     "vue-property-decorator": "^9.0.0",
     "vue-router": "^3.2.0",
