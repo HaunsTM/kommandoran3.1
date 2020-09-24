@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import DataService from './api/DataService';
+import DataService from './api/dataService';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import mqttParserHomeassistant from './helpers/mqttParserHomeassistant'
 

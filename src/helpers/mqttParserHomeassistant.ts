@@ -1,11 +1,12 @@
-import DataService from '@/api/ataService';
+import DataService from '@/api/dataService';
+import AllTransportData from '@/helpers/allTransportData';
 import mqtt from 'mqtt'
 
 /* https://css-tricks.com/getting-started-with-vue-plugins/ */
 
-export default class mqttParserHomeassistant {
+export default class MqttParserHomeassistant {
     private _topic!: string;
-    private _message!: {};
+    private _message: any = {};
 
     public constructor(topic: string, message: Buffer) {
         this._topic = topic;
@@ -16,6 +17,8 @@ export default class mqttParserHomeassistant {
     public distributeMessageToStorage(): void {
         switch (this._topic) {
             case DataService.mqttTopicSubscriptions.transport_departureTime:
+                const lines = this._message.lines;
+                const aTD = new AllTransportData(lines);
                 debugger;
             default:
         }
