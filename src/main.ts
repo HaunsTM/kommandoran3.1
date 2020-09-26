@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store/store';
+import store from './store';
 import vuetify from './plugins/vuetify';
 import IdleVue from 'idle-vue';
 
@@ -14,8 +14,7 @@ const eventsHub = new Vue();
 
 Vue.use(IdleVue, { 
   idleTime: SCREENSAVER_IDLE_TIME_BEFORE_START_MS,
-  eventEmitter: eventsHub,
-  store });
+  eventEmitter: eventsHub});
 
 
 

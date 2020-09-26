@@ -17,7 +17,6 @@ export default class TransportData implements ITransportData {
         this._line = line;
         this.parse();
     }
-;
 
     private parse(): void {
         if (this._line) {
