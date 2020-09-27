@@ -17,14 +17,10 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+import DataService from '@/api/dataService';
 
 @Component({
     components: {
-    },
-    computed: {
-        ...mapGetters({
-
-        }),
     },
 })
 export default class HomeAssistant extends Vue {

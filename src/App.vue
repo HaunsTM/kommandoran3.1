@@ -10,6 +10,7 @@
         <kommandoran-footer />
       </v-col>
     </v-footer>
+    <services />
   </v-app>
 </template>
 
@@ -17,10 +18,9 @@
 import { Component, Watch, Vue } from 'vue-property-decorator';
 import DataService from './api/dataService';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
-import mqttParserHomeassistant from './helpers/mqttParserHomeassistant'
 
-import mqtt, { MqttClient } from 'mqtt'
 import KommandoranFooter from '@/components/KommandoranFooter.vue';
+import Services from '@/components/Services.vue';
 
 import { OnIdle, OnActive } from 'vue-plugin-helper-decorator';
 
@@ -29,10 +29,13 @@ const ScreenSaver = namespace('ScreenSaver');
 
 @Component({
     components: {
-      KommandoranFooter
+      KommandoranFooter,
+      Services
     },
 })
 export default class App extends Vue {
+
+    /** Screensaver */
     @ScreenSaver.State
     private shouldEnterScreenSaverMode!: boolean;
     @ScreenSaver.Action
@@ -55,45 +58,14 @@ export default class App extends Vue {
     public async whenIdle() {
         const displayed = true;
         this.updateDisplayStatus(displayed);
-        //this.navigateTo('ScreenSaver');
     }
     
     @OnActive()
     public async whenActive() {
         const displayed = false;
         this.updateDisplayStatus(displayed);
-        //this.navigateTo('HomeAssistant');
     }
 
-
-
-    /** hooks */
-    private created(): void {
-        this.startMqttService();
-        console.log('propertyComputed will update, as this.property is now reactive.')
-    }
-
-
-    /** mqtt */
-    public startMqttService(): void {
-        const client = 
-            mqtt.connect(
-                DataService.mqttHomeassistantConstructorParameters.brokerUrl,
-                DataService.mqttHomeassistantConstructorParameters.options);
-        
-        client.on("connect",async ()=>{this.onMqttConnected(client);});
-        client.on("message",this.onMqttMessage);   
-    }
-    private async onMqttConnected(client: mqtt.Client): Promise<void> {
-        await client.subscribe(DataService.mqttTopicSubscriptions.transport_departureTime);
-    }
-    private onMqttMessage(topic: string, message: Buffer, packet: {}): void {
-        const parser = new mqttParserHomeassistant(topic, message);
-        parser.distributeMessageToStorage()
-    }
-    private onMqttError(error: string): void {
-        console.log(`Error: ${error}`);        
-    }
 }
 </script>
 

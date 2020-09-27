@@ -1,5 +1,5 @@
 import {ITransportData} from '@/interfaces/iTransportData';
-export interface IAllTransportData {
+export default interface IAllTransportData {
     
     Departures: {
         City: string;

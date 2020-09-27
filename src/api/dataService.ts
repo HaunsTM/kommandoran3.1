@@ -2,7 +2,7 @@
 
 export default class DataService {
 
-    public static readonly baseURL = 'http://api.sulten.se';
+    public static readonly baseURL = 'http://10.0.0.6';
     public static readonly mqttHomeassistantConstructorParameters = {
         'brokerUrl': 'ws://10.0.0.6:1884/',
         'options': {

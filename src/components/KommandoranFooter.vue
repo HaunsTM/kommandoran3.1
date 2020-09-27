@@ -1,6 +1,7 @@
 <template>
     <footer class="flex-container">
         <div class='left-column' v-on:click="showClimateDetailsDialog = true">
+            <!--
             <kommandoran-footer-climate
                 :climate = "climate"
                 :mediaWidthMoreThan400px = "mediaWidthMoreThan400px" />
@@ -10,21 +11,19 @@
                     :climate="climate" 
                     :mediaWidthMoreThan400px = "mediaWidthMoreThan400px"  />
             </v-dialog>
+            -->
         </div>
         <div class='center-column' v-on:click="showTransportDetailsDialog = true">
-                <kommandoran-footer-transport
-                    :transportData="transportData" 
-                    :mediaWidthMoreThan400px = "mediaWidthMoreThan400px" />
-
+                <kommandoran-footer-transport />
+                <!--
                 <v-dialog v-model="showTransportDetailsDialog"
                     max-width="70%">
-                    <kommandoran-footer-transport-details 
-                    :transportData="transportData" 
+                    <kommandoran-footer-transport-details
                     :mediaWidthMoreThan400px = "mediaWidthMoreThan400px" />
                 </v-dialog>
-                
+                -->
         </div>
-        <div class='right-column'>
+        <div class='right-column'>asd
             <kommandoran-footer-time />
         </div>
     </footer>
@@ -33,9 +32,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import KommandoranFooterTime from './KommandoranFooterTime.vue';
+import KommandoranFooterTransport from './KommandoranFooterTransport.vue';
 @Component({
     components: {
-        KommandoranFooterTime
+        KommandoranFooterTime,
+        KommandoranFooterTransport
     },
 })
 export default class KommandoranFooter extends Vue {
@@ -45,7 +46,7 @@ export default class KommandoranFooter extends Vue {
 
 <style scope>
     .flex-container {
-
+        border: 1px solid black;
         display: flex;        
         justify-content: space-between;
     }
@@ -53,7 +54,7 @@ export default class KommandoranFooter extends Vue {
         font-size: 0.8rem;
         line-height: 1.1rem;
         width: 100%;
-        padding: 0 0.3rem 0 0.3rem;
+        /*padding: 0 0.3rem 0 0.3rem;*/
     }
     footer > div {
         display: flex;

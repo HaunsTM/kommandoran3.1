@@ -1,6 +1,7 @@
 <template>
 	
-    <article class="flex-container" v-if="transportData['Lund'] && transportData['Malmö']">
+    <article class="flex-container">
+    <!--<article class="flex-container" v-if="transportData['Lund'] && transportData['Malmö']">
         <div class="flex-container column">
                 <img :src="require(`@/assets/bus32x32.png`)" />
         </div>
@@ -45,20 +46,37 @@
                 </div>
  
             </div>
-        </div>
+        </div>-->
+        {{transportData}}
     </article>
 </template>
 
 <script lang="ts">
 
 
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Watch, Vue } from 'vue-property-decorator';
+
+
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+import { namespace } from 'vuex-class';
+
+import AllTransportData from '@/helpers/allTransportData';
+import IAllTransportData from '@/interfaces/iAllTransportData';
+const TransportData = namespace('TransportData');
+
 @Component({
     components: {
     },
 })
 export default class KommandoranFooterTransport extends Vue {
+    /** Screensaver */
+    @TransportData.Getter
+    private currentTransportData!: AllTransportData;
     
+    @Watch('currentTransportData')
+    private transportData(value: IAllTransportData, oldValue: IAllTransportData): IAllTransportData {
+        return this.currentTransportData;
+    }    
 }
 </script>
 

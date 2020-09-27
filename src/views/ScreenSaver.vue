@@ -23,14 +23,10 @@ import Vue from 'vue/types/umd';
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+import DataService from '@/api/dataService';
 
 @Component({
     components: {
-    },
-    computed: {
-        ...mapGetters({
-            apiBaseUrl: 'apiBaseUrl'
-        }),
     },
 })
 export default class ScreenSaver extends Vue {
@@ -39,7 +35,7 @@ export default class ScreenSaver extends Vue {
     private apiBaseUrl!: string;
 
     private imgSrc(): string {
-        const src = `${this.apiBaseUrl}/local/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
+        const src = `${DataService.baseURL}:8123/local/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
         return src;
     }
     private updateNonsenseNoCacheKey(): void {

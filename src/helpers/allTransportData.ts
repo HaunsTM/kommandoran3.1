@@ -2,7 +2,7 @@ import {ITransportData} from '@/interfaces/iTransportData';
 import TransportData from '@/helpers/transportData';
 import moment from "moment";
 import _ from "lodash";
-import { IAllTransportData } from '@/interfaces/iAllTransportData';
+import IAllTransportData from '@/interfaces/iAllTransportData';
 export default class AllTransportData implements IAllTransportData {
     _lines: Array<ITransportData>;
     Departures!: {
