@@ -1,55 +1,50 @@
 <template>
   <v-app dark>
+        <v-dialog
+            v-model="shouldEnterScreenSaverMode"
+            dark
+        >
+            <screen-saver />
+        </v-dialog>
 
     <router-view></router-view>
-    <v-footer app>
-      <v-col
-        class="text-center"
-        cols="12"
-      >
-        <kommandoran-footer />
-      </v-col>
+
+    <v-footer fixed>
+         <kommandoran-footer class="kommandoran-footer" />
     </v-footer>
     <services />
   </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import DataService from './api/dataService';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 
+import ScreenSaver from '@/views/ScreenSaver.vue';
 import KommandoranFooter from '@/components/KommandoranFooter.vue';
 import Services from '@/components/Services.vue';
 
 import { OnIdle, OnActive } from 'vue-plugin-helper-decorator';
 
 import { namespace } from 'vuex-class';
-const ScreenSaver = namespace('ScreenSaver');
+const ScreenSaverData = namespace('ScreenSaver');
 
 @Component({
     components: {
       KommandoranFooter,
+      ScreenSaver,
       Services
     },
 })
 export default class App extends Vue {
 
     /** Screensaver */
-    @ScreenSaver.State
+    @ScreenSaverData.State
     private shouldEnterScreenSaverMode!: boolean;
-    @ScreenSaver.Action
+    @ScreenSaverData.Action
     private updateDisplayStatus!: (displayed: boolean) => void;
     
-    @Watch('shouldEnterScreenSaverMode')
-    onShouldEnterScreenSaverModeChanged(value: string, oldValue: string) {
-        if(this.shouldEnterScreenSaverMode) {
-            this.navigateTo('ScreenSaver');
-        } else {
-            this.navigateTo('HomeAssistant');
-        }
-    }
-
     private navigateTo(routeName: string): void {
         this.$router.push({ name: routeName })        
     }
@@ -68,4 +63,8 @@ export default class App extends Vue {
 
 }
 </script>
-
+<style scope>
+    .kommandoran-footer {
+        /*border: 1px solid red;*/
+    }
+</style>

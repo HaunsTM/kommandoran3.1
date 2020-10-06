@@ -1,8 +1,5 @@
-import {ITransportData} from '@/interfaces/iTransportData';
+import IDeparture from '@/interfaces/iDeparture';
 export default interface IAllTransportData {
     
-    Departures: {
-        City: string;
-        Lines: ITransportData[]
-    }[];
+    Departures: IDeparture[];
 }

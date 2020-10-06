@@ -1,7 +1,5 @@
 <template>
-	
-    <article class="flex-container">
-    <!--<article class="flex-container" v-if="transportData['Lund'] && transportData['Malmö']">
+	<article class="flex-container" v-if="lundDeparture && lundDeparture">
         <div class="flex-container column">
                 <img :src="require(`@/assets/bus32x32.png`)" />
         </div>
@@ -10,44 +8,26 @@
 
                <div class="flex-container column">
                     <div class="current-ride">
-                        <span class="line-info">{{transportData['Lund'][0].Name}}</span>                   
+                        <span class="line-info">{{lundDeparture.lines[0].journeyDateTime}}</span>                   
                     </div>
                     <div class="current-ride">
-                        <span class="line-info">{{transportData['Malmö'][0].Name}}</span>                   
-                    </div>
-                </div>
-                <div class="flex-container column" v-if="mediaWidthMoreThan400px">
-                    <div class="current-ride">
-                        <span class="line-info">{{transportData['Lund'][0].Towards.substring(0, 10)}}</span>                   
-                    </div>
-                    <div class="current-ride">
-                        <span class="line-info">{{transportData['Malmö'][0].Towards.substring(0, 10)}}</span>                   
+                        <span class="line-info">{{malmoDeparture.lines[0].journeyDateTime}}</span>                   
                     </div>
                 </div>
                 
-               <div class="flex-container column">
-                    <div class="current-ride">
-                        <span class="scheduled-departure">{{transportData['Lund'][0].JourneyTime}}</span>               
-                    </div>
-                    <div class="current-ride">
-                        <span class="scheduled-departure">{{transportData['Malmö'][0].JourneyTime}}</span>                   
-                    </div>
-                </div>
-                
-                <div class="flex-container column" v-if="mediaWidthMoreThan400px">
+                <div class="flex-container column">
                     <span class="next-ride">
-                        <span>({{transportData['Lund'][1].Name}}</span>
-                        <span>{{transportData['Lund'][1].JourneyTime}})</span>
+                        <span>({{lundDeparture.lines[1].name}}</span>
+                        <span>{{lundDeparture.lines[1].journeyDateTime}})</span>
                     </span>
                      <span class="next-ride">
-                        <span>({{transportData['Malmö'][1].Name}}</span>
-                        <span>{{transportData['Malmö'][1].JourneyTime}})</span>
+                        <span>({{malmoDeparture.lines[1].name}}</span>
+                        <span>{{malmoDeparture.lines[1].journeyDateTime}})</span>
                     </span>
                 </div>
  
             </div>
-        </div>-->
-        {{transportData}}
+        </div>
     </article>
 </template>
 
@@ -62,6 +42,8 @@ import { namespace } from 'vuex-class';
 
 import AllTransportData from '@/helpers/allTransportData';
 import IAllTransportData from '@/interfaces/iAllTransportData';
+import IDeparture from '@/interfaces/iDeparture';
+
 const TransportData = namespace('TransportData');
 
 @Component({
@@ -71,12 +53,38 @@ const TransportData = namespace('TransportData');
 export default class KommandoranFooterTransport extends Vue {
     /** Screensaver */
     @TransportData.Getter
-    private currentTransportData!: AllTransportData;
+    private currentTransportData!: IAllTransportData;
     
-    @Watch('currentTransportData')
-    private transportData(value: IAllTransportData, oldValue: IAllTransportData): IAllTransportData {
+    public get transportData(): IAllTransportData {
         return this.currentTransportData;
-    }    
+    }
+
+    public get departures(): IDeparture[] | null {
+        if (this.currentTransportData) {
+            return this.currentTransportData.Departures;
+        }
+        return null;
+    }
+
+    public get lundDeparture(): IDeparture | undefined {
+        const lundDeparture = 
+            this.currentTransportData?.Departures?.find( (d) => {
+                const correctCity = d.city.toLowerCase() == 'lund';
+                return correctCity
+            })
+
+        return lundDeparture;
+    }
+
+    public get malmoDeparture(): IDeparture | undefined {
+        const malmoDeparture = 
+            this.currentTransportData?.Departures?.find( (d) => {
+                const correctCity = d.city.toLowerCase() == 'malmö';
+                return correctCity
+            })
+
+        return malmoDeparture;
+    }
 }
 </script>
 

@@ -10,8 +10,14 @@ export default class DataService {
             'password': 'feeNg9Nu3feesee3vahch4zuwee3eiquobeuk1eis0Oor5hi1xeizai3loo0tai0',
           }
     };
+
     public static readonly mqttTopicSubscriptions = {
-        'transport_departureTime': 'transport/departureTime'
+        'climate_grovkök_golv': 'climate/grovkök_golv',
+        'climate_huvudtermostat': 'climate/huvudtermostat',
+        'climate_uterum': 'climate/uterum',
+        'climate_sjöstorpsvägen_3a': 'climate/sjöstorpsvägen_3a',
+        'image_screensaver': 'image/screensaver',
+        'transport_departure': 'transport/departure'
     };
-   
+
 }

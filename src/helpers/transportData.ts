@@ -1,46 +1,43 @@
 import {ITransportData} from '@/interfaces/iTransportData';
-import moment from "moment";
 export default class TransportData implements ITransportData {
-    _line: ITransportData;
-    City!: string;
-    JourneyDateTime!: string;
-    LineTypeName!: string;
-    Name!: string;
-    Towards!: string;    
-    RealTimeInfo!: {
-        NewDepPoint: string;
-        DepTimeDeviation: string;
-        DepDeviationAffect: string;
+    line: ITransportData;
+    city!: string;
+    journeyDateTime!: string;
+    lineTypeName!: string;
+    name!: string;
+    towards!: string;    
+    realTimeInfo!: {
+        newDepPoint: string;
+        depTimeDeviation: string;
+        depDeviationAffect: string;
     }
 
     constructor(line: ITransportData) {
-        this._line = line;
+        this.line = line;
         this.parse();
     }
 
     private parse(): void {
-        if (this._line) {
+        if (this.line) {
 
-            const cityMatches = this._line?.Towards?.match(/^([^\s])+/);
-            this.City = cityMatches ? cityMatches[0] : '';
+            const cityMatches = this.line?.towards?.match(/^([^\s])+/);
+            this.city = cityMatches ? cityMatches[0] : '';
 
-            this.Name = this._line.Name ? this._line.Name : '';
+            this.name = this.line.name ? this.line.name : '';
 
-            this.JourneyDateTime = this._line.JourneyDateTime ? 
-                (new Date(this._line.JourneyDateTime))
+            this.journeyDateTime = this.line.journeyDateTime ? 
+                (new Date(this.line.journeyDateTime))
                     .toLocaleTimeString('se-SE', { hour: 'numeric', hour12: false, minute: 'numeric' }) : '';
 
-            this.LineTypeName = this._line.LineTypeName ? this._line.LineTypeName : '';
+            this.lineTypeName = this.line.lineTypeName ? this.line.lineTypeName : '';
 
-            this.Towards = this._line.Towards ?  this._line.Towards : '';
+            this.towards = this.line.towards ?  this.line.towards : '';
 
-            this.RealTimeInfo = {
-                NewDepPoint : this._line.RealTimeInfo?.NewDepPoint ? this._line.RealTimeInfo?.NewDepPoint : '',
-                DepTimeDeviation : this._line.RealTimeInfo?.DepTimeDeviation ? this._line.RealTimeInfo?.DepTimeDeviation : '',
-                DepDeviationAffect : this._line.RealTimeInfo?.DepDeviationAffect ? this._line.RealTimeInfo?.DepDeviationAffect : '',
+            this.realTimeInfo = {
+                newDepPoint : this.line.realTimeInfo?.newDepPoint ? this.line.realTimeInfo?.newDepPoint : '',
+                depTimeDeviation : this.line.realTimeInfo?.depTimeDeviation ? this.line.realTimeInfo?.depTimeDeviation : '',
+                depDeviationAffect : this.line.realTimeInfo?.depDeviationAffect ? this.line.realTimeInfo?.depDeviationAffect : '',
             };
-
         }
     }
-
 }

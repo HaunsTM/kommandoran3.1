@@ -1,17 +1,8 @@
 <template>
-    <div>
-
-      <!-- Sizes your content based upon application components -->
-      <v-main>
-
-        <!-- Provides the application the proper gutter -->
-        <v-container fluid>
+    
           <div class="iframe-container">
               <iframe src="http://10.0.0.6:8123" title="Home Assistant"></iframe>
           </div>
-        </v-container>
-      </v-main>
-    </div>
 </template>
 
 <script>
@@ -32,11 +23,12 @@ export default class HomeAssistant extends Vue {
   .iframe-container {
         position: relative;
         overflow: hidden;
-        padding-top: calc(100vh - 90px);
+        padding-top: calc(100vh - 52px);
         width: 100%;
-        border: 1px solid black;
+        /*border: 1px solid red;*/
 
     }
+
     .iframe-container iframe {
         position: absolute;
         top: 0;
@@ -45,6 +37,5 @@ export default class HomeAssistant extends Vue {
         right: 0;
         min-width: 100vw;
         min-height: 100vh;
-
     }
 </style>

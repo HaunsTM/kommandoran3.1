@@ -2,92 +2,103 @@ import Vue from 'vue/types/umd';
 
 <template>
 
-    <div>
-        <v-app-bar app>
-        <!--  -->
-            <v-toolbar-title>Kommandoran</v-toolbar-title>
-        </v-app-bar>
-
-        <!-- Sizes your content based upon application components -->
-        <v-main>
-
-            <!-- Provides the application the proper gutter -->
-            <v-container fluid>
-                <div class="container">
-                    <img :src="imgSrc()" />
-                </div>
-            </v-container>
-        </v-main>
-    </div>
+    <v-card
+      class="card"
+    >
+        <div class="image-container">
+            <img :src="imgSrc()" alt="">
+        </div>
+    
+        <v-card-subtitle class="pb-0">
+        
+        </v-card-subtitle>
+    
+        <v-card-text class="text--light">
+            <div> Distribution time: {{distributionTime()}}</div>
+            <div> Original file name: {{originalFileName()}}</div>
+        </v-card-text>
+    
+        <v-card-actions>    
+            <v-btn
+                color="orange"
+                text
+            >
+                Stäng
+            </v-btn>
+        </v-card-actions>
+    </v-card>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import DataService from '@/api/dataService';
 
+import { namespace } from 'vuex-class';
+import IImage from '@/interfaces/iImage';
+import moment from "moment";
+import 'moment/locale/sv';
+const ScreenSaverData = namespace('ScreenSaver');
 @Component({
     components: {
     },
 })
 export default class ScreenSaver extends Vue {
-    private nonsenseNoCacheKey = -1;
-    private idTimer!: NodeJS.Timeout;
-    private apiBaseUrl!: string;
-
-    private imgSrc(): string {
-        const src = `${DataService.baseURL}:8123/local/screensaver_image.jpg?${this.nonsenseNoCacheKey}`;
-        return src;
-    }
-    private updateNonsenseNoCacheKey(): void {
-        this.nonsenseNoCacheKey = new Date().getTime();
+   private momentLocalized(timestamp: number): moment.Moment {
+        const momentLocalized = moment(timestamp, 'X').locale("sv");
+        return momentLocalized;
     }
     
-    mounted() {
-        this.idTimer = setInterval(this.updateNonsenseNoCacheKey, 1000);
+    /** Screensaver */
+    @ScreenSaverData.Getter
+    private currentScreensaverImage!: IImage;    
+    
+    private imgSrc(): string | null {
+        if (this.currentScreensaverImage) {
+            const src = `${DataService.baseURL}:8123/local/screensaver_image.jpg?${this.currentScreensaverImage.distributionTimeUTC}`;
+            //const src = `data:image/jpeg;base64,${this.currentScreensaverImage.base64Image}`;
+            return src;
+        }
+        debugger;
+        return null;
     }
-    beforeDestroy() {
-        clearInterval( this.idTimer );
+    
+    private originalFileName(): string | null {
+        if (this.currentScreensaverImage) {
+            const originalFileName = this.currentScreensaverImage.originalFileName;
+            return originalFileName;
+        }
+        return null;
+    }
+    
+    private distributionTime(): string | null {
+        if (this.currentScreensaverImage) {
+            const distributionTime = this.momentLocalized(this.currentScreensaverImage.distributionTimeUTC).toDate().toString();
+            return distributionTime;
+        }
+        return null;
     }
 }
 </script>
 <style scoped>
 
-    img, div {
-        padding: 0;
-        margin: 0;
+    .card 
+        {
+        position: fixed;
+        top:0;
+        left: 0;
+        /*max-height: calc(100vh -172px);*/
     }
 
-    .container {
+    .image-container {
         display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        width: 100vw;
+    }
+    img {
+
+        height: calc(100vh - 160px);
     }
 
-    @media (max-width: 400px) {
-        .container {
-            width: 100%;
-            height: calc(95vh - 60px - 40px);
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            width: auto;
-            max-height: calc(95vh - 60px - 40px);
-        }
-    }
 
-   @media (min-width: 401px) {
-        .container {
-            width: 100%;
-            height: calc(93vh - 60px - 40px);
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            width: auto;
-            max-height: calc(93vh - 60px - 40px);
-        }
-
-    }
+    
 </style>

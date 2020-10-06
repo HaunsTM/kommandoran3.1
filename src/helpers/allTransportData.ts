@@ -1,14 +1,12 @@
 import {ITransportData} from '@/interfaces/iTransportData';
+import Departure from '@/helpers/departure';
 import TransportData from '@/helpers/transportData';
-import moment from "moment";
 import _ from "lodash";
 import IAllTransportData from '@/interfaces/iAllTransportData';
+import IDeparture from '@/interfaces/iDeparture';
 export default class AllTransportData implements IAllTransportData {
-    _lines: Array<ITransportData>;
-    Departures!: {
-        City: string;
-        Lines: ITransportData[];
-    }[];
+    private _lines: Array<ITransportData>;
+    public Departures!: IDeparture[];
 
     constructor(lines: Array<ITransportData>) {
         this._lines = lines;
@@ -17,20 +15,16 @@ export default class AllTransportData implements IAllTransportData {
 
     private parse(): void {
         const parsedAndFiltered = _(this._lines)
-            /* .filter( (l) => {
-                const transportIsInCorrectDirection = /(Malmö|Lund)/g.test(l.Towards);
-                return transportIsInCorrectDirection;
-            }) */
             .map((l) => {
                 return new TransportData(l)
             })            
-            .orderBy(['JourneyDateTime'],['asc'])
-            .groupBy(l => l.City)
+            .orderBy(['journeyDateTime'],['asc'])
+            .groupBy(l => l.city)
             .map( (value, prop) => {
-               return {
-                    City: prop,
-                    Lines: value
-                }
+                const city = prop;
+                const lines = value;
+                const departure = new Departure(city, lines);
+               return departure;
             })
             .value();
         this.Departures = parsedAndFiltered;
