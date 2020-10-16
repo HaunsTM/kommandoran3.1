@@ -1,12 +1,15 @@
 export interface ITransportData {
     city: string;
     name: string;
-    journeyDateTime: string;
+    journeyDate: string;
+    journeyDateTime: number;
+    journeyTime: string;
     lineTypeName: string;
-    towards: string;
     realTimeInfo: {
         newDepPoint: string;
         depTimeDeviation: string;
         depDeviationAffect: string;
     }
+    runNo: string;
+    towards: string;
 }

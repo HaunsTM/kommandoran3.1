@@ -1,206 +1,102 @@
 <template>
-    <article class="menu" >
+    <v-card>
+        <v-card-title class="headline">
+        Buss från Dalby bsstn
+        </v-card-title>
 
-        <v-layout hidden-sm-and-up>
-            <v-flex>
-                <div class="small-transport-container">
-                    <div class="small-transport-destination-container">
-                        <div class="title-row">
-                            <h3 class="headline">Mot Lund</h3>
-                        </div>
-                        <div class="every-odd-transport-option-color"
-                            v-for="data in transportData.Lund"
-                            v-bind:key="data.JourneyTime">
-                            
-                            <div class="small-transport-option-container">
-                                <div class="small-transport-option-line-location-container">
-                                    <div class="title">
-                                        {{data.Name}}
-                                    </div>
-                                    <div class="caption">
-                                        {{data.LineTypeName}}&nbsp;&rarr;&nbsp;{{data.Towards}}
-                                    </div>
-                                </div>
-                                <div class="small-transport-option-time">
-                                    <div>
-                                        <h4 class="title">
-                                            {{data.JourneyTime}}
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="small-transport-container">
-                    <div class="small-transport-destination-container">
-                        <div class="title-row">
-                            <h3 class="headline">Mot Malmö</h3>
-                        </div>
-                        <div class="every-odd-transport-option-color"
-                            v-for="data in transportData.Malmö"
-                            v-bind:key="data.JourneyTime">
-                            
-                            <div class="small-transport-option-container">
-                                <div class="small-transport-option-line-location-container">
-                                    <div class="title">
-                                        {{data.Name}}
-                                    </div>
-                                    <div class="caption">
-                                        {{data.LineTypeName}}&nbsp;&rarr;&nbsp;{{data.Towards}}
-                                    </div>
-                                </div>
-                                <div class="small-transport-option-time">
-                                    <div>
-                                        <h4 class="title">
-                                            {{data.JourneyTime}}
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </v-flex>
-        </v-layout>
+        <article 
+            v-for="(departure, index) in departures"
+            :key="index">
 
-        <v-layout hidden-xs-only row wrap>
-            <v-flex sm12 md6 class="transport-wrapper">
-                <v-card dark class="transport">
-                    <v-card-title class="title-row" primary-title>
-                        <div>
-                            <h3 class="headline">Lund</h3>
-                        </div>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-data-table
-                            :headers="transportHeaders"
-                            :items="transportsToLund"
-                            hide-actions
-                            class="elevation-1"
-                        >
-                            <template slot="headerCell" slot-scope="props">
-                                <v-tooltip bottom>
-                                <template v-slot:activator="{ on }">
-                                    <span v-on="on">
-                                    {{ props.header.text }}
-                                    </span>
-                                </template>
-                                <span>
-                                    {{ props.header.text }}
-                                </span>
-                                </v-tooltip>
-                            </template>
-                            <template v-slot:items="props">
-                                <td class="text-xs-right">{{ props.item.Name }}<br /><small>{{props.item.LineTypeName}} -> {{props.item.Towards}}</small> </td>
-                                <td class="text-xs-right">{{ props.item.JourneyTime }}</td>
-                            </template>
-                        </v-data-table>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-            <v-flex sm12 md6 class="transport-wrapper">
-                <v-card dark class="transport">
-                    <v-card-title class="title-row" primary-title>
-                        <div>
-                            <h3 class="headline">Malmö</h3>
-                        </div>
-                    </v-card-title>
-                     <v-card-text>
-                        <v-data-table
-                            :headers="transportHeaders"
-                            :items="transportsToMalmo"
-                            hide-actions
-                            class="elevation-1"
-                        >
-                            <template slot="headerCell" slot-scope="props">
-                                <v-tooltip bottom>
-                                <template v-slot:activator="{ on }">
-                                    <span v-on="on">
-                                    {{ props.header.text }}
-                                    </span>
-                                </template>
-                                <span>
-                                    {{ props.header.text }}
-                                </span>
-                                </v-tooltip>
-                            </template>
-                            <template v-slot:items="props">
-                                <td class="text-xs-right">{{ props.item.Name }}<br /><small>{{props.item.LineTypeName}} -> {{props.item.Towards}}</small></td>
-                                <td class="text-xs-right">{{ props.item.JourneyTime }}</td>
-                            </template>
-                        </v-data-table>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-        </v-layout>
+            <v-card-subtitle>
+                {{departure.city}}
+            </v-card-subtitle>
             
-    </article> 
+                <v-simple-table dense fixed-header class="departures">
+                    <template>
+                    <thead>
+                        <tr>
+                            <th>
+                                tid
+                            </th>
+                            <th>
+                                linje
+                            </th>
+                            <th>
+                                mot
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="line in departure.lines"
+                            :key="line.journeyDateTime"
+                            >
+                            <td>{{ line.journeyTime }}</td>
+                            <td>{{ line.name }}</td>
+                            <td>{{ line.towards }}</td>
+                        </tr>
+                    </tbody>
+                    </template>
+                </v-simple-table>
+        </article>
+
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="green darken-1"
+                text
+                @click="this.close"
+            >
+                Stäng
+            </v-btn>
+        </v-card-actions>
+    </v-card>
 </template>
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
+
+
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+import { namespace } from 'vuex-class';
+
+import AllTransportData from '@/helpers/allTransportData';
+import IAllTransportData from '@/interfaces/iAllTransportData';
+import IDeparture from '@/interfaces/iDeparture';
+
+const TransportData = namespace('TransportData');
 @Component({
     components: {
     },
 })
 export default class KommandoranFooterTransportDetails extends Vue {
+    @TransportData.Getter
+    private currentTransportData!: IAllTransportData;
+    
+    public get transportData(): IAllTransportData {
+        return this.currentTransportData;
+    }
+
+    public get departures(): IDeparture[] | null {
+        if (this.currentTransportData) {
+            return this.currentTransportData.Departures;
+        }
+        return null;
+    }
+
+    public close(): void {
+        this.$emit('close');
+    }
     
 }
 
 </script>
 
 <style scope>
-    .menu{
-        padding: 1rem;
-        background-color: #212121;
-        opacity: 1;
-    }
-
-    .title-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    .departures {
+        max-width: 50%;
     }
     
-    .small-transport-container {
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 2rem;
-    }
-
-    .small-transport-destination-container {
-        display: flex;
-        flex-direction: column;        
-    }
-    
-    .small-transport-option-container {        
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 0.5rem;
-    }
-
-    .every-odd-transport-option-color:nth-child(even) {
-        background: #424242;
-    }
-
-    .small-transport-option-line-location-container {
-        display: flex;
-        flex-direction: column;
-        align-items: space-around;
-    }
-
-    .small-transport-option-line-location-container > div {
-        
-        padding-bottom: 0.5rem;
-    }
-
-    .small-transport-option-time {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
 
 </style>

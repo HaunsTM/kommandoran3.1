@@ -12,6 +12,10 @@
             </div>
             <div v-on:click="showTransportDetailsDialog = true">
                 <kommandoran-footer-transport />
+                <v-dialog v-model="showTransportDetailsDialog"
+                    max-width="70%">
+                    <kommandoran-footer-transport-details @close="closeTransportDetails"/>
+                </v-dialog>
             </div>
             <div>
                 <kommandoran-footer-time />
@@ -24,15 +28,22 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import KommandoranFooterClimate from './KommandoranFooterClimate.vue';
 import KommandoranFooterTime from './KommandoranFooterTime.vue';
 import KommandoranFooterTransport from './KommandoranFooterTransport.vue';
+import KommandoranFooterTransportDetails from './KommandoranFooterTransportDetails.vue';
+
 @Component({
     components: {
         KommandoranFooterClimate,
         KommandoranFooterTime,
-        KommandoranFooterTransport
+        KommandoranFooterTransport,
+        KommandoranFooterTransportDetails
     },
 })
 export default class KommandoranFooter extends Vue {
-    
+    public showTransportDetailsDialog = false;
+
+    public closeTransportDetails(): void {
+        this.showTransportDetailsDialog = false;
+    }
 }
 </script>
 

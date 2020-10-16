@@ -58,7 +58,6 @@ export default class ScreenSaver extends Vue {
             //const src = `data:image/jpeg;base64,${this.currentScreensaverImage.base64Image}`;
             return src;
         }
-        debugger;
         return null;
     }
     

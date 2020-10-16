@@ -17,7 +17,7 @@ export default class AllTransportData implements IAllTransportData {
         const parsedAndFiltered = _(this._lines)
             .map((l) => {
                 return new TransportData(l)
-            })            
+            })
             .orderBy(['journeyDateTime'],['asc'])
             .groupBy(l => l.city)
             .map( (value, prop) => {

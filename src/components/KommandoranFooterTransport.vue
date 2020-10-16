@@ -8,21 +8,25 @@
 
                <div class="flex-container column">
                     <div class="current-ride">
-                        <span class="line-info">{{lundDeparture.lines[0].journeyDateTime}}</span>                   
+                        <span>Mot Lund:</span>
+                        <span>{{lundDeparture.lines[0].name}}</span>
+                        <span class="line-info">{{lundDeparture.lines[0].journeyTime}}</span>                   
                     </div>
                     <div class="current-ride">
-                        <span class="line-info">{{malmoDeparture.lines[0].journeyDateTime}}</span>                   
+                        <span>Mot Malmö:</span>
+                        <span>{{malmoDeparture.lines[0].name}}</span>
+                        <span class="line-info">{{malmoDeparture.lines[0].journeyTime}}</span>                   
                     </div>
                 </div>
                 
                 <div class="flex-container column">
                     <span class="next-ride">
                         <span>({{lundDeparture.lines[1].name}}</span>
-                        <span>{{lundDeparture.lines[1].journeyDateTime}})</span>
+                        <span>{{lundDeparture.lines[1].journeyTime}})</span>
                     </span>
                      <span class="next-ride">
                         <span>({{malmoDeparture.lines[1].name}}</span>
-                        <span>{{malmoDeparture.lines[1].journeyDateTime}})</span>
+                        <span>{{malmoDeparture.lines[1].journeyTime}})</span>
                     </span>
                 </div>
  
@@ -51,7 +55,6 @@ const TransportData = namespace('TransportData');
     },
 })
 export default class KommandoranFooterTransport extends Vue {
-    /** Screensaver */
     @TransportData.Getter
     private currentTransportData!: IAllTransportData;
     

@@ -1,8 +1,9 @@
 import {ITransportData} from '@/interfaces/iTransportData';
 export default class TransportData implements ITransportData {
-    line: ITransportData;
     city!: string;
-    journeyDateTime!: string;
+    journeyDateTime!: number;
+    journeyDate!: string;
+    journeyTime!: string;
     lineTypeName!: string;
     name!: string;
     towards!: string;    
@@ -11,33 +12,41 @@ export default class TransportData implements ITransportData {
         depTimeDeviation: string;
         depDeviationAffect: string;
     }
+    runNo!: string;
 
     constructor(line: ITransportData) {
-        this.line = line;
-        this.parse();
+        this.parse(line);
     }
 
-    private parse(): void {
-        if (this.line) {
+    private parse(line: ITransportData): void {
+        if (line) {
 
-            const cityMatches = this.line?.towards?.match(/^([^\s])+/);
+            const cityMatches = line?.towards?.match(/^([^\s])+/);
             this.city = cityMatches ? cityMatches[0] : '';
 
-            this.name = this.line.name ? this.line.name : '';
+            this.name = line.name ? line.name : '';
 
-            this.journeyDateTime = this.line.journeyDateTime ? 
-                (new Date(this.line.journeyDateTime))
-                    .toLocaleTimeString('se-SE', { hour: 'numeric', hour12: false, minute: 'numeric' }) : '';
+            this.journeyDateTime = line.journeyDateTime ? 
+                new Date(line.journeyDateTime).getTime() : -1;
 
-            this.lineTypeName = this.line.lineTypeName ? this.line.lineTypeName : '';
+            this.journeyDate = line.journeyDateTime ? 
+                new Date(line.journeyDateTime)
+                    .toLocaleDateString('sv-SE') : '';
 
-            this.towards = this.line.towards ?  this.line.towards : '';
+            this.journeyTime = line.journeyDateTime ? 
+                new Date(line.journeyDateTime)
+                    .toLocaleTimeString('sv-SE', { hour: 'numeric', hour12: false, minute: 'numeric' }) : '';
+
+            this.lineTypeName = line.lineTypeName ? line.lineTypeName : '';
+
+            this.towards = line.towards ?  line.towards : '';
 
             this.realTimeInfo = {
-                newDepPoint : this.line.realTimeInfo?.newDepPoint ? this.line.realTimeInfo?.newDepPoint : '',
-                depTimeDeviation : this.line.realTimeInfo?.depTimeDeviation ? this.line.realTimeInfo?.depTimeDeviation : '',
-                depDeviationAffect : this.line.realTimeInfo?.depDeviationAffect ? this.line.realTimeInfo?.depDeviationAffect : '',
+                newDepPoint : line.realTimeInfo?.newDepPoint ? line.realTimeInfo?.newDepPoint : '',
+                depTimeDeviation : line.realTimeInfo?.depTimeDeviation ? line.realTimeInfo?.depTimeDeviation : '',
+                depDeviationAffect : line.realTimeInfo?.depDeviationAffect ? line.realTimeInfo?.depDeviationAffect : '',
             };
+            runNo: this.runNo ? this.runNo : '';
         }
     }
 }
