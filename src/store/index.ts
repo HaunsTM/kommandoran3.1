@@ -2,23 +2,25 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import IndoorGrovkokData from "./modules/indoorGrovkokData.module";
-import IndoorHuvudtermostatData from "./modules/indoorHuvudtermostatData.module";
-import IndoorUterumData from "./modules/indoorUterumData.module";
+import IndoorUtilityRoomData from "./modules/indoorUtilityRoomData.module";
+import IndoorMainThermostatData from "./modules/indoorMainThermostatData.module";
+import IndoorOutdoorRoomData from "./modules/indoorOutdoorRoomData.module";
 import OutdoorData from "./modules/outdoorData.module";
 
-import ScreenSaver from "./modules/screenSaver.module";
+import ScreenSaverData from "./modules/screenSaverData.module";
+import SoundData from "./modules/soundData.module";
 import TransportData from "./modules/transportData.module";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    IndoorGrovkokData,
-    IndoorHuvudtermostatData,
-    IndoorUterumData,
+    IndoorUtilityRoomData,
+    IndoorMainThermostatData,
+    IndoorOutdoorRoomData,
     OutdoorData,
-    ScreenSaver,
+    ScreenSaverData,
+    SoundData,
     TransportData,
   }
 });

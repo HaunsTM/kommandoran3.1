@@ -13,6 +13,7 @@
          <kommandoran-footer class="kommandoran-footer" />
     </v-footer>
     <services />
+    <sound />
   </v-app>
 </template>
 
@@ -24,17 +25,19 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import ScreenSaver from '@/views/ScreenSaver.vue';
 import KommandoranFooter from '@/components/KommandoranFooter.vue';
 import Services from '@/components/Services.vue';
+import Sound from '@/components/Sound.vue';
 
 import { OnIdle, OnActive } from 'vue-plugin-helper-decorator';
 
 import { namespace } from 'vuex-class';
-const ScreenSaverData = namespace('ScreenSaver');
+const ScreenSaverData = namespace('ScreenSaverData');
 
 @Component({
     components: {
       KommandoranFooter,
       ScreenSaver,
-      Services
+      Services,
+      Sound
     },
 })
 export default class App extends Vue {

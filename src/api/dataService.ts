@@ -7,16 +7,17 @@ export default class DataService {
         'brokerUrl': 'ws://10.0.0.6:1884/',
         'options': {
             'username': 'homeassistant',
-            'password': 'feeNg9Nu3feesee3vahch4zuwee3eiquobeuk1eis0Oor5hi1xeizai3loo0tai0',
+            'password': 'OhgaiXipeCaetae9Shaegeequ6iJoow7aifeisoD2naab5oong8Pohchohshoo1A',
           }
     };
 
     public static readonly mqttTopicSubscriptions = {
-        'climate_grovkök_golv': 'climate/grovkök_golv',
-        'climate_huvudtermostat': 'climate/huvudtermostat',
-        'climate_uterum': 'climate/uterum',
+        'climate_utilityRoomFloor': 'climate/grovkök_golv',
+        'climate_mainThermostat': 'climate/huvudtermostat',
+        'climate_outdoorRoom': 'climate/uterum',
         'climate_sjöstorpsvägen_3a': 'climate/sjöstorpsvägen_3a',
         'image_screensaver': 'image/screensaver',
+        'sound_play_file': 'sound/play/file',
         'transport_departure': 'transport/departure'
     };
 

@@ -37,7 +37,7 @@ import { namespace } from 'vuex-class';
 import IImage from '@/interfaces/iImage';
 import moment from "moment";
 import 'moment/locale/sv';
-const ScreenSaverData = namespace('ScreenSaver');
+const ScreenSaverData = namespace('ScreenSaverData');
 @Component({
     components: {
     },
