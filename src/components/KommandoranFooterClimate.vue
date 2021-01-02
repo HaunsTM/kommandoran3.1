@@ -1,45 +1,56 @@
 <template>
-    <v-carousel hide-delimiter-background hide-delimiters :show-arrows="false" height="2rem" cycle interval="6000">
-        <v-carousel-item transition="fade">
-            <div class="flex-container temperatureText">
+    
+    <article class="flex-container">
+
+            
+            <div class="flex-container" v-if="currentMainThermostatData">
+                <div class="indoor-icon">
+                    <img :src="require(`@/assets/thermometer32x32.png`)" />
+                </div>
+                <div class="flex-container column temperature" v-if="currentOutdoorData" >
+                    <div class="small">
+                        Inne
+                    </div>
+                    <div>
+                        <span class="temperature-digit" :class="cssTemperature(currentMainThermostatData.current_temperature)">{{currentMainThermostatData.current_temperature}}</span><span> °C</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div v-if="currentUtilityRoomData && currentOutdoorRoomData">
+                <v-carousel hide-delimiter-background hide-delimiters :show-arrows="false" height="2rem" cycle interval="1500">
+                    <v-carousel-item>
+                        <div class="flex-container column temperature">
+                            <div class="small">
+                                Grovkök
+                            </div>
+                            <div>
+                                <span class="temperature-digit" :class="cssTemperature(currentUtilityRoomData.current_temperature)">{{currentUtilityRoomData.current_temperature}}</span><span> °C</span>
+                            </div>
+                        </div>
+                    </v-carousel-item>
+                    <v-carousel-item>
+                        <div class="flex-container column temperature">
+                            <div class="small">
+                                Uterum
+                            </div>
+                            <div>
+                                <span class="temperature-digit" :class="cssTemperature(currentOutdoorRoomData.current_temperature)">{{currentOutdoorRoomData.current_temperature}}</span><span> °C</span>
+                            </div>
+                        </div>
+                    </v-carousel-item>
+                </v-carousel>
+            </div>
+
+            <div class="flex-container column temperature" v-if="currentOutdoorData" >
+                <div class="small">
+                    Ute
+                </div>
                 <div>
-                    <img :src="require(`@/assets/air-conditioner24x24.png`)" />
-                </div>                
-                <div v-if="currentMainThermostatData" >
-                    <span class="temperature-digit" :class="cssTemperature(currentMainThermostatData.current_temperature)">{{currentMainThermostatData.current_temperature}}</span><span> °C</span>
-                </div>
-                <div v-if="currentUtilityRoomData && currentOutdoorRoomData">
-                    <v-carousel hide-delimiter-background hide-delimiters :show-arrows="false" height="2rem" cycle interval="800">
-                        <v-carousel-item transition="scroll-x-transition">
-                                <div class="flex-container column justify-content-center temperatureText">
-                                    <div class="small">
-                                        Grovkök:
-                                    </div>
-                                    <div>
-                                        <span class="temperature-digit" :class="cssTemperature(currentUtilityRoomData.current_temperature)">{{currentUtilityRoomData.current_temperature}}</span><span> °C</span>
-                                    </div>
-                                </div>
-                        </v-carousel-item>
-                        <v-carousel-item transition="scroll-x-transition">
-                                <div class="flex-container column justify-content-center temperatureText">
-                                    <div class="small">
-                                        Uterum:
-                                    </div>
-                                    <div>
-                                        <span class="temperature-digit" :class="cssTemperature(currentOutdoorRoomData.current_temperature)">{{currentOutdoorRoomData.current_temperature}}</span><span> °C</span>
-                                    </div>
-                                </div>
-                        </v-carousel-item>
-                    </v-carousel>
+                    <span class="temperature-digit" :class="cssTemperature(currentOutdoorData.current_temperature)">{{currentOutdoorData.current_temperature}}</span><span>&nbsp;°C</span>
                 </div>
             </div>
-        </v-carousel-item>
-        <v-carousel-item transition="scroll-x-transition"  v-if="currentOutdoorData">
-            <div class="temperatureText">
-                <span>Utomhus: </span><span class="temperature-digit" :class="cssTemperature(currentOutdoorData.current_temperature)">{{currentOutdoorData.current_temperature}}</span><span> °C</span>
-            </div>
-        </v-carousel-item>
-    </v-carousel>
+    </article>
 </template>
 
 <script lang="ts">
@@ -107,20 +118,23 @@ export default class KommandoranFooterClimate extends Vue {
         display: flex;
         align-items: center;
     }
-    .temperatureText {
+    .column {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .indoor-icon {
+        max-height: 35px !important;
+    }
+    .v-carousel {
+        height: 35px !important;
+    }
+    .temperature{
+        width: 3rem;
         color: black;
     }
     .temperature-digit {
         font-family: PIXymbolsDigitClocksW90-Bd;
-    }
-    .column {
-        flex-direction: column;
-    }
-    .justify-content-center {
-        justify-content: center;
-    }
-    .indoor-icon {
-        padding-right: 0.2rem;
     }
     .small {
         font-size: 0.5rem;
