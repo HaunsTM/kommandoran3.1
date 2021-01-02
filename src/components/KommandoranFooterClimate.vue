@@ -6,7 +6,7 @@
                     <img :src="require(`@/assets/air-conditioner24x24.png`)" />
                 </div>                
                 <div v-if="currentMainThermostatData" >
-                    <span :class="cssTemperature(currentMainThermostatData.current_temperature)">{{currentMainThermostatData.current_temperature}}</span><span> °C</span>
+                    <span class="temperature-digit" :class="cssTemperature(currentMainThermostatData.current_temperature)">{{currentMainThermostatData.current_temperature}}</span><span> °C</span>
                 </div>
                 <div v-if="currentUtilityRoomData && currentOutdoorRoomData">
                     <v-carousel hide-delimiter-background hide-delimiters :show-arrows="false" height="2rem" cycle interval="800">
@@ -16,7 +16,7 @@
                                         Grovkök:
                                     </div>
                                     <div>
-                                        <span :class="cssTemperature(currentUtilityRoomData.current_temperature)">{{currentUtilityRoomData.current_temperature}}</span><span> °C</span>
+                                        <span class="temperature-digit" :class="cssTemperature(currentUtilityRoomData.current_temperature)">{{currentUtilityRoomData.current_temperature}}</span><span> °C</span>
                                     </div>
                                 </div>
                         </v-carousel-item>
@@ -26,7 +26,7 @@
                                         Uterum:
                                     </div>
                                     <div>
-                                        <span :class="cssTemperature(currentOutdoorRoomData.current_temperature)">{{currentOutdoorRoomData.current_temperature}}</span><span> °C</span>
+                                        <span class="temperature-digit" :class="cssTemperature(currentOutdoorRoomData.current_temperature)">{{currentOutdoorRoomData.current_temperature}}</span><span> °C</span>
                                     </div>
                                 </div>
                         </v-carousel-item>
@@ -36,7 +36,7 @@
         </v-carousel-item>
         <v-carousel-item transition="scroll-x-transition"  v-if="currentOutdoorData">
             <div class="temperatureText">
-                <span>Utomhus: </span><span :class="cssTemperature(currentOutdoorData.current_temperature)">{{currentOutdoorData.current_temperature}}</span><span> °C</span>
+                <span>Utomhus: </span><span class="temperature-digit" :class="cssTemperature(currentOutdoorData.current_temperature)">{{currentOutdoorData.current_temperature}}</span><span> °C</span>
             </div>
         </v-carousel-item>
     </v-carousel>
@@ -109,6 +109,9 @@ export default class KommandoranFooterClimate extends Vue {
     }
     .temperatureText {
         color: black;
+    }
+    .temperature-digit {
+        font-family: PIXymbolsDigitClocksW90-Bd;
     }
     .column {
         flex-direction: column;

@@ -78,34 +78,36 @@ export default class ServiceMqttHomeAssistant extends Vue {
         console.log('component ServiceMqttHomeAssistant is now reactive.')
     }
 
+    private mqttClient!: mqtt.MqttClient;
 
     /** mqtt */
     public startMqttService(): void {
         try {
-            const client = 
+            this.mqttClient = 
                 mqtt.connect(
                     DataService.mqttHomeassistantConstructorParameters.brokerUrl,
                     DataService.mqttHomeassistantConstructorParameters.options);
-            client.on("connect",async ()=>{this.onMqttConnected(client);});
-            client.on("message",this.onMqttMessage);
+            this.mqttClient.on("connect", this.onMqttConnected);
+            this.mqttClient.on("message", this.onMqttMessage);
+            this.mqttClient.on("error", this.onMqttError);
+            this.mqttClient.on("offline", this.onMqttOffline);
         } catch (error) {
             console.error(error);
         }  
     }
-    private async onMqttConnected(client: mqtt.Client): Promise<void> {
+
+    private onMqttConnected(): void {
         try {
-            await Promise.all([
-                client.subscribe(DataService.mqttTopicSubscriptions.climate_utilityRoomFloor),
-                client.subscribe(DataService.mqttTopicSubscriptions.climate_mainThermostat),
-                client.subscribe(DataService.mqttTopicSubscriptions.climate_outdoorRoom),
-                client.subscribe(DataService.mqttTopicSubscriptions.climate_sjöstorpsvägen_3a),
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.climate_utilityRoomFloor);
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.climate_mainThermostat);
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.climate_outdoorRoom);
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.climate_sjöstorpsvägen_3a);
 
-                client.subscribe(DataService.mqttTopicSubscriptions.image_screensaver),
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.image_screensaver);
 
-                client.subscribe(DataService.mqttTopicSubscriptions.sound_play_file),
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.sound_play_file);
 
-                client.subscribe(DataService.mqttTopicSubscriptions.transport_departure),
-            ])
+            this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.transport_departure);
         } catch (error) {            
             console.error(error);
         }  
@@ -123,6 +125,13 @@ export default class ServiceMqttHomeAssistant extends Vue {
             console.error(error); 
     }
 
+    
+    private onMqttOffline(error: string): void {
+        //https://stackoverflow.com/questions/37312983/node-js-mqtt-client-doesnt-received-subscribed-messages-when-broker-goes-down-a
+        this.mqttClient.end(true, () => {
+            this.startMqttService();
+        });
+    }
     public distributeMessageToStorage(topic: string, jSONMessage: any): void {
         try {
             switch (topic) {
@@ -136,7 +145,6 @@ export default class ServiceMqttHomeAssistant extends Vue {
                     break;
                 case DataService.mqttTopicSubscriptions.climate_outdoorRoom:
                     const indoorOutdoorRoomData: IIndoorClimate = jSONMessage as IIndoorClimate;
-                    debugger;
                     this.updateCurrentOutdoorRoomData(indoorOutdoorRoomData);
                     break;
                 case DataService.mqttTopicSubscriptions.climate_sjöstorpsvägen_3a:
@@ -145,6 +153,7 @@ export default class ServiceMqttHomeAssistant extends Vue {
                     break;
                 case DataService.mqttTopicSubscriptions.image_screensaver:
                     const screensaverImage: IImage = jSONMessage as IImage;
+                    console.log(jSONMessage)
                     this.updateCurrentScreensaverImage(screensaverImage);
                     break;
                 case DataService.mqttTopicSubscriptions.sound_play_file:

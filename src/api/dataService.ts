@@ -6,8 +6,9 @@ export default class DataService {
     public static readonly mqttHomeassistantConstructorParameters = {
         'brokerUrl': 'ws://10.0.0.6:1884/',
         'options': {
-            'username': 'homeassistant',
-            'password': 'OhgaiXipeCaetae9Shaegeequ6iJoow7aifeisoD2naab5oong8Pohchohshoo1A',
+            'username': 'mqtt1',
+            'password': 'mqtt1',
+            'keepalive': 1
           }
     };
 
