@@ -2578,6 +2578,16 @@ concat-stream@^1.5.0, concat-stream@^1.6.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+concat-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-2.0.0.tgz#414cf5af790a48c60ab9be4527d56d5e41133cb1"
+  integrity sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==
+  dependencies:
+    buffer-from "^1.0.0"
+    inherits "^2.0.3"
+    readable-stream "^3.0.2"
+    typedarray "^0.0.6"
+
 confusing-browser-globals@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/confusing-browser-globals/-/confusing-browser-globals-1.0.9.tgz#72bc13b483c0276801681871d4898516f8f54fdd"
@@ -5776,7 +5786,16 @@ mqtt-packet@^6.3.2:
     debug "^4.1.1"
     process-nextick-args "^2.0.1"
 
-mqtt@^4.1.0, mqtt@^4.2.1:
+mqtt-packet@^6.6.0:
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/mqtt-packet/-/mqtt-packet-6.7.0.tgz#0098f7f5d02f34b8dce35507befd6394e1109575"
+  integrity sha512-GzgeeCirQpB59FyhHvf8BLiIYgxctPSxuSyaF2vWnkt7paX7jtuQ8Gpl+DkHCxZmYuv7GQE6zcUAegpafd0MqQ==
+  dependencies:
+    bl "^4.0.2"
+    debug "^4.1.1"
+    process-nextick-args "^2.0.1"
+
+mqtt@^4.1.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/mqtt/-/mqtt-4.2.1.tgz#7dbc4a01b5188186db90919c6fce318692c77004"
   integrity sha512-Iv893r+jWlo5GkNcPOfCGwW8M49IixwHiKLFFYTociEymSibUVCORVEjPXWPGzSxhn7BdlUeHicbRmWiv0Crkg==
@@ -5797,6 +5816,25 @@ mqtt@^4.1.0, mqtt@^4.2.1:
     split2 "^3.1.0"
     ws "^7.3.1"
     xtend "^4.0.1"
+
+mqtt@^4.2.6:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/mqtt/-/mqtt-4.2.6.tgz#b655547a9cfb3d86bfb398948b8dbb37e2e3bfd0"
+  integrity sha512-GpxVObyOzL0CGPBqo6B04GinN8JLk12NRYAIkYvARd9ZCoJKevvOyCaWK6bdK/kFSDj3LPDnCsJbezzNlsi87Q==
+  dependencies:
+    commist "^1.0.0"
+    concat-stream "^2.0.0"
+    debug "^4.1.1"
+    help-me "^1.0.1"
+    inherits "^2.0.3"
+    minimist "^1.2.5"
+    mqtt-packet "^6.6.0"
+    pump "^3.0.0"
+    readable-stream "^3.6.0"
+    reinterval "^1.1.0"
+    split2 "^3.1.0"
+    ws "^7.3.1"
+    xtend "^4.0.2"
 
 ms@2.0.0:
   version "2.0.0"
@@ -7111,7 +7149,7 @@ read-pkg@^5.1.1:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-readable-stream@^3.0.0, readable-stream@^3.0.6, readable-stream@^3.1.1, readable-stream@^3.4.0, readable-stream@^3.6.0:
+readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.1.1, readable-stream@^3.4.0, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
   integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
@@ -9044,7 +9082,7 @@ ws@^7.3.1:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.3.1.tgz#d0547bf67f7ce4f12a72dfe31262c68d7dc551c8"
   integrity sha512-D3RuNkynyHmEJIpD2qrgVkc9DQ23OrN/moAwZX4L8DfvszsJxpjQuUq3LMx6HoYji9fbIOBY18XWBsAux1ZZUA==
 
-xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.0, xtend@~4.0.1:
+xtend@^4.0.0, xtend@^4.0.1, xtend@^4.0.2, xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==

@@ -80,13 +80,20 @@ export default class ServiceMqttHomeAssistant extends Vue {
 
     private mqttClient!: mqtt.MqttClient;
 
+    private get dataService(): DataService {
+        return DataService;
+    }
+
     /** mqtt */
     public startMqttService(): void {
         try {
+            const brokerUrl = DataService.mqttHomeassistantConstructorParameters.brokerUrl;
+            const options = DataService.mqttHomeassistantConstructorParameters.options;
+
             this.mqttClient = 
                 mqtt.connect(
-                    DataService.mqttHomeassistantConstructorParameters.brokerUrl,
-                    DataService.mqttHomeassistantConstructorParameters.options);
+                    brokerUrl,
+                    options);
             this.mqttClient.on("connect", this.onMqttConnected);
             this.mqttClient.on("message", this.onMqttMessage);
             this.mqttClient.on("error", this.onMqttError);
@@ -153,7 +160,6 @@ export default class ServiceMqttHomeAssistant extends Vue {
                     break;
                 case DataService.mqttTopicSubscriptions.image_screensaver:
                     const screensaverImage: IImage = jSONMessage as IImage;
-                    console.log(jSONMessage)
                     this.updateCurrentScreensaverImage(screensaverImage);
                     break;
                 case DataService.mqttTopicSubscriptions.sound_play_file:

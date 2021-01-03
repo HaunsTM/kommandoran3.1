@@ -137,7 +137,7 @@ export default class KommandoranFooterClimate extends Vue {
         font-family: PIXymbolsDigitClocksW90-Bd;
     }
     .small {
-        font-size: 0.5rem;
+        font-size: x-small;
     }
     .very-cold {
         color: darkblue;
