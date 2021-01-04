@@ -12,12 +12,12 @@ import Vue from 'vue/types/umd';
         <v-card-subtitle class="pb-0">
         
         </v-card-subtitle>
-    
+    <!--
         <v-card-text class="text--light">
             <div> Distribution time: {{distributionTime()}}</div>
             <div> Original file name: {{originalFileName()}}</div>
         </v-card-text>
-    
+    -->
         <v-card-actions>    
             <v-btn
                 color="orange"
@@ -85,7 +85,11 @@ export default class ScreenSaver extends Vue {
         position: fixed;
         top:0;
         left: 0;
-        /*max-height: calc(100vh -172px);*/
+        /**/
+        border: 1px solid red;
+        padding-top: 2rem;
+        height: calc(100vh - 47px);
+        max-height: calc(100vh - 47px);
     }
 
     .image-container {

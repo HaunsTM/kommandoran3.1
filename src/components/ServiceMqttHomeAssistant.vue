@@ -99,7 +99,7 @@ export default class ServiceMqttHomeAssistant extends Vue {
             this.mqttClient.on("error", this.onMqttError);
             this.mqttClient.on("offline", this.onMqttOffline);
         } catch (error) {
-            console.error(error);
+            console.error(`Error in invoking startMqttService: ${error}`); 
         }  
     }
 
@@ -115,30 +115,35 @@ export default class ServiceMqttHomeAssistant extends Vue {
             this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.sound_play_file);
 
             this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.transport_departure);
-        } catch (error) {            
-            console.error(error);
+            console.info("Mqtt client is connected! Subscriptions are made to topics.");
+        } catch (error) {
+            console.error(`Error in connecting to mqtt broker: ${error}`); 
         }  
     }
     private onMqttMessage(topic: string, message: Buffer, packet: {}): void {
          try {
+            console.info("Mqtt client is connected! Subscriptions are made to topics.");
             const stringMessage = message.toString();
             const jSONMessage = JSON.parse(stringMessage);
             this.distributeMessageToStorage(topic, jSONMessage);
         } catch (error) {
-            console.error(error);
+            console.error(`Error in receiving mqtt: ${error}`); 
         }
     }
     private onMqttError(error: string): void {
-            console.error(error); 
+        console.error(`Error in mqtt-connection: ${error}`);
+        process.exit(1)
     }
 
     
-    private onMqttOffline(error: string): void {
+    private onMqttOffline(error: string): void {        
+        console.error(`Mqtt-connection got offline: ${error}`);
         //https://stackoverflow.com/questions/37312983/node-js-mqtt-client-doesnt-received-subscribed-messages-when-broker-goes-down-a
         this.mqttClient.end(true, () => {
             this.startMqttService();
         });
     }
+    
     public distributeMessageToStorage(topic: string, jSONMessage: any): void {
         try {
             switch (topic) {

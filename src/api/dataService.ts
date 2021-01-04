@@ -6,10 +6,11 @@ export default class DataService {
     public static readonly mqttHomeassistantConstructorParameters = {
         'brokerUrl': 'ws://10.0.0.6:1884/',
         'options': {
-            'clientId': new Date().getTime().toString(),
+            'clientId': 'mqtt1js',
             'username': 'mqtt1',
             'password': 'mqtt1',
-            'keepalive': 60
+            'clean': true,
+            'keepalive': 10
           }
     };
 
