@@ -97,7 +97,7 @@ export default class ServiceMqttHomeAssistant extends Vue {
             this.mqttClient.on("connect", this.onMqttConnected);
             this.mqttClient.on("message", this.onMqttMessage);
             this.mqttClient.on("error", this.onMqttError);
-            this.mqttClient.on("offline", this.onMqttOffline);
+            //this.mqttClient.on("offline", this.onMqttOffline);
         } catch (error) {
             console.error(`Error in invoking startMqttService: ${error}`); 
         }  
