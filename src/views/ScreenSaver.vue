@@ -85,8 +85,7 @@ export default class ScreenSaver extends Vue {
         position: fixed;
         top:0;
         left: 0;
-        /**/
-        border: 1px solid red;
+        /**/        
         padding-top: 2rem;
         height: calc(100vh - 47px);
         max-height: calc(100vh - 47px);

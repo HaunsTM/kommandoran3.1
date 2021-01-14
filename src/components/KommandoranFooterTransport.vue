@@ -1,5 +1,5 @@
 <template>
-	<article class="flex-container" v-if="lundDeparture && lundDeparture">
+	<article class="flex-container" v-if="lundDeparture && malmoDeparture">
         <div class="flex-container column">
                 <img :src="require(`@/assets/bus32x32.png`)" />
         </div>
@@ -7,12 +7,12 @@
             <div class="flex-container">
 
                <div class="flex-container column">
-                    <div class="current-ride">
+                    <div class="current-ride" v-if="lundDeparture.lines[0]">
                         <span>Mot Lund:</span>
                         <span>{{lundDeparture.lines[0].name}}</span>
                         <span class="line-info">{{lundDeparture.lines[0].journeyTime}}</span>                   
                     </div>
-                    <div class="current-ride">
+                    <div class="current-ride" v-if="malmoDeparture.lines[0]">
                         <span>Mot Malmö:</span>
                         <span>{{malmoDeparture.lines[0].name}}</span>
                         <span class="line-info">{{malmoDeparture.lines[0].journeyTime}}</span>                   
@@ -20,11 +20,11 @@
                 </div>
                 
                 <div class="flex-container column">
-                    <span class="next-ride">
+                    <span class="next-ride" v-if="lundDeparture.lines[1]">
                         <span>({{lundDeparture.lines[1].name}}</span>
                         <span>{{lundDeparture.lines[1].journeyTime}})</span>
                     </span>
-                     <span class="next-ride">
+                     <span class="next-ride" v-if="malmoDeparture.lines[1]">
                         <span>({{malmoDeparture.lines[1].name}}</span>
                         <span>{{malmoDeparture.lines[1].journeyTime}})</span>
                     </span>
@@ -85,7 +85,7 @@ export default class KommandoranFooterTransport extends Vue {
                 const correctCity = d.city.toLowerCase() == 'malmö';
                 return correctCity
             })
-
+debugger;
         return malmoDeparture;
     }
 }
