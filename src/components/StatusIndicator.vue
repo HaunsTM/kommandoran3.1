@@ -1,7 +1,12 @@
 <template>
-    <div class="heart">
-        <v-icon 
-            :color="heartColor" large>{{ svgPath }}</v-icon>
+    <div class="heart-container">
+        <div class="last-contact-text">
+            {{secondsSinceLastMQTTReceived}}
+        </div>
+        <div class="heart-icon">
+            <v-icon
+                :color="heartColor" large>{{ svgPath }}</v-icon>
+        </div>
     </div>            
 </template>
 
@@ -9,32 +14,34 @@
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import { namespace } from 'vuex-class';
 import { mdiHeart } from '@mdi/js';
+import moment from "moment";
 
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 const MQTTData = namespace('MQTTData');
 
 @Component
 export default class StatusIndicator extends Vue {
-    readonly HEART_BEAT_ANIMATION_CYCLE_MS = 200;
+    readonly HEART_BEAT_ANIMATION_CYCLE_MS = 700;
     readonly TIME_BEFORE_CONSIDERED_DEAD_MS = 1000 * 8;
+    readonly UPDATE_TIMER_TEXT_INTERVAL_MS = 1000;
 
     timeoutAliveCheckTimerID = -1;
     timeoutHeartAnimationTimerID = -1;
+    timeoutTextTimerID = -1;
     storedMQTTReceived!: Date;
-
+    secondsSinceLastMQTTReceived = ""
+    
     isDead = false;
     
     heartToggleColor = false;
 
     heartColor = "";
 
-    lastMQTTReceived!: Date;
-
-
     /** hooks */
     private created(): void {
         this.resetAliveCheckTimer();
         this.resetHeartAnimationTimer();
+        this.resetUpdateSecondsSinceLastMQTTReceivedTimer();
         this.heartColor = "grey";
     }
 
@@ -53,6 +60,7 @@ export default class StatusIndicator extends Vue {
         }
     }
 
+    
     private get svgPath(): string {
         return mdiHeart;
     }
@@ -64,8 +72,6 @@ export default class StatusIndicator extends Vue {
             this.heartColor = this.heartToggleColor ? "red" : "red lighten-4";
         }
     }
-
-
 
     /** alive */
 
@@ -100,9 +106,23 @@ export default class StatusIndicator extends Vue {
         this.heartAnimate();
     }
 
+    private updateSecondsSinceLastMQTTReceived() {
+        const lastMQTTReceived = moment(this.storedMQTTReceived);
+        const now = moment(new Date());
+        const duration = moment.duration(now.diff(lastMQTTReceived));
+        const seconds = duration.asSeconds();
+        const secondsRounded = Math.round(seconds);
 
+        this.secondsSinceLastMQTTReceived = secondsRounded.toString();
 
-
+        this.timeoutTextTimerID =
+            window.setTimeout(this.resetUpdateSecondsSinceLastMQTTReceivedTimer, this.UPDATE_TIMER_TEXT_INTERVAL_MS);;
+    }
+    
+    private resetUpdateSecondsSinceLastMQTTReceivedTimer(): void {
+        window.clearTimeout(this.timeoutTextTimerID);
+        this.updateSecondsSinceLastMQTTReceived();
+    }
 
     private beforeDestroy(): void {
         if (this.timeoutAliveCheckTimerID) {
@@ -111,18 +131,40 @@ export default class StatusIndicator extends Vue {
         if (this.timeoutHeartAnimationTimerID) {
             window.clearTimeout(this.timeoutHeartAnimationTimerID);
         }
+        if (this.timeoutTextTimerID) {
+            window.clearTimeout(this.timeoutTextTimerID);
+        }
     }
 
 }
 </script>
 
 <style scope>
-    .heart {
+    .heart-container {
         height: 100%;
+        width: 20px;
+        position: relative;
     }
     .heart-icon {
-        border: 1px solid black;
-        color: red;
-    }    
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        z-index: 10;
+    }
+    .last-contact-text {
+        position: absolute;
+        width: 1rem;
+        top: 0.5rem;
+        left: 0.6rem;
+        background-color: white; 
+        
+        text-align: center;
+
+  border-radius: 15px;
+        z-index: 100;
+    }
 
 </style>

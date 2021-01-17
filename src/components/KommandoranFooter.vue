@@ -17,8 +17,8 @@
                 <kommandoran-footer-transport-details @close="closeTransportDetails"/>
             </v-dialog>
         </div>
-        <div class="h-group">
-            <kommandoran-footer-time />            
+        <div class="h-group" @click="reloadPage">
+            <kommandoran-footer-time />
             <status-indicator class="v-center"/>
         </div>        
     </footer>
@@ -46,6 +46,10 @@ export default class KommandoranFooter extends Vue {
 
     public closeTransportDetails(): void {
         this.showTransportDetailsDialog = false;
+    }
+    
+    public reloadPage(): void {
+        location.reload();
     }
 }
 </script>
