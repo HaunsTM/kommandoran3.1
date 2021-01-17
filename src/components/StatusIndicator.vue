@@ -76,7 +76,7 @@ export default class StatusIndicator extends Vue {
 
     private startAliveCheck(): void {
         this.timeoutAliveCheckTimerID =
-            window.setTimeout(this.setIsDead, 10*1000);
+            window.setTimeout(this.setIsDead, this.TIME_BEFORE_CONSIDERED_DEAD_MS);
     }
 
     private resetAliveCheckTimer(): void {
@@ -93,7 +93,7 @@ export default class StatusIndicator extends Vue {
     private heartAnimate(): void {
         this.animateHeartBeat();
         this.timeoutHeartAnimationTimerID =
-            window.setTimeout(this.resetHeartAnimationTimer, 400);
+            window.setTimeout(this.resetHeartAnimationTimer, this.HEART_BEAT_ANIMATION_CYCLE_MS);
     }
     private resetHeartAnimationTimer(): void {
         window.clearTimeout(this.timeoutHeartAnimationTimerID);
