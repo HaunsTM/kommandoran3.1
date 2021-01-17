@@ -20,6 +20,7 @@ import DataService from '@/api/dataService';
 const IndoorUtilityRoomData = namespace('IndoorUtilityRoomData');
 const IndoorMainThermostatData = namespace('IndoorMainThermostatData');
 const IndoorOutdoorRoomData = namespace('IndoorOutdoorRoomData');
+const MQTTData = namespace('MQTTData');
 const OutdoorData = namespace('OutdoorData');
 
 const TransportData = namespace('TransportData');
@@ -56,6 +57,13 @@ export default class ServiceMqttHomeAssistant extends Vue {
     @ScreenSaverData.Action
     private updateCurrentScreensaverImage!: (screensaverImage: IImage) => void;
 
+    /** MQTTData */
+    @MQTTData.Getter
+    private currentMQTTReceived!: Date | null;
+    @MQTTData.Action
+    private updateMQTTReceived!: (lastMQTTReceived: Date) => void;
+
+
     /** Sound */
     @SoundData.Getter
     private currentSound!: ISound;
@@ -75,7 +83,6 @@ export default class ServiceMqttHomeAssistant extends Vue {
     /** hooks */
     private created(): void {
         this.startMqttService();
-        console.log('component ServiceMqttHomeAssistant is now reactive.')
     }
 
     private mqttClient!: mqtt.MqttClient;
@@ -115,17 +122,17 @@ export default class ServiceMqttHomeAssistant extends Vue {
             this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.sound_play_file);
 
             this.mqttClient.subscribe(DataService.mqttTopicSubscriptions.transport_departure);
-            console.info("Mqtt client is connected! Subscriptions are made to topics.");
         } catch (error) {
             console.error(`Error in connecting to mqtt broker: ${error}`); 
         }  
     }
     private onMqttMessage(topic: string, message: Buffer, packet: {}): void {
-         try {
-            console.info("Mqtt client is connected! Subscriptions are made to topics.");
+        const mQTTReceivedTime = new Date();
+        try {
             const stringMessage = message.toString();
             const jSONMessage = JSON.parse(stringMessage);
             this.distributeMessageToStorage(topic, jSONMessage);
+            this.updateMQTTReceived(mQTTReceivedTime);
         } catch (error) {
             console.error(`Error in receiving mqtt: ${error}`); 
         }

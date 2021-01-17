@@ -85,7 +85,7 @@ export default class KommandoranFooterTransport extends Vue {
                 const correctCity = d.city.toLowerCase() == 'malmö';
                 return correctCity
             })
-debugger;
+
         return malmoDeparture;
     }
 }

@@ -26,6 +26,7 @@
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
+    "@mdi/js": "^5.8.55",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.4.0",

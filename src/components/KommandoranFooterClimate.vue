@@ -141,9 +141,10 @@ export default class KommandoranFooterClimate extends Vue {
     }
     .very-cold {
         color: darkblue;
+        text-shadow: 0 0 10px deepskyblue;
     }
     .cold {
-        color: deepskyblue;
+        color: blue;
     }
     .not-freezing {
         color: black;

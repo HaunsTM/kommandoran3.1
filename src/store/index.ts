@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import IndoorUtilityRoomData from "./modules/indoorUtilityRoomData.module";
 import IndoorMainThermostatData from "./modules/indoorMainThermostatData.module";
 import IndoorOutdoorRoomData from "./modules/indoorOutdoorRoomData.module";
+import MQTTData from "./modules/mqttData.module";
 import OutdoorData from "./modules/outdoorData.module";
 
 import ScreenSaverData from "./modules/screenSaverData.module";
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     IndoorUtilityRoomData,
     IndoorMainThermostatData,
     IndoorOutdoorRoomData,
+    MQTTData,
     OutdoorData,
     ScreenSaverData,
     SoundData,
