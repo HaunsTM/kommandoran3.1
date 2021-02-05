@@ -12,12 +12,11 @@ import Vue from 'vue/types/umd';
         <v-card-subtitle class="pb-0">
         
         </v-card-subtitle>
-    <!--
+    
         <v-card-text class="text--light">
-            <div> Distribution time: {{distributionTime()}}</div>
+            <!-- <div> Distribution time: {{distributionTime()}}</div> -->
             <div> Original file name: {{originalFileName()}}</div>
         </v-card-text>
-    -->
         <v-card-actions>    
             <v-btn
                 color="orange"
@@ -54,7 +53,7 @@ export default class ScreenSaver extends Vue {
     
     private imgSrc(): string | null {
         if (this.currentScreensaverImage) {
-            const src = `${DataService.baseURL}:8123/local/screensaver_image.jpg?${this.currentScreensaverImage.distributionTimeUTC}`;
+            const src = `${DataService.baseURL}:8123/local/kommandoran/screensaver_image.jpg?${this.currentScreensaverImage.distributionTimeUTC}`;
             //const src = `data:image/jpeg;base64,${this.currentScreensaverImage.base64Image}`;
             return src;
         }
