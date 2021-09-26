@@ -8,7 +8,7 @@ import IdleVue from 'idle-vue';
 Vue.config.productionTip = false;
 
 
-const SCREENSAVER_IDLE_TIME_BEFORE_START_MS = (30 * 1000);
+const SCREENSAVER_IDLE_TIME_BEFORE_START_MS = (60 * 1000);
 
 const eventsHub = new Vue();
 
