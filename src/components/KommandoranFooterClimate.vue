@@ -1,13 +1,12 @@
 <template>
     
     <article class="flex-container">
-
             
             <div class="flex-container" v-if="currentMainThermostatData">
                 <div class="indoor-icon">
                     <img :src="require(`@/assets/thermometer32x32.png`)" />
                 </div>
-                <div class="flex-container column temperature" v-if="currentOutdoorData" >
+                <div class="flex-container column temperature" v-if="currentMainThermostatData" >
                     <div class="small">
                         Inne
                     </div>
