@@ -20,7 +20,7 @@
     "vue-plugin-helper-decorator": "^0.0.12",
     "vue-property-decorator": "^9.0.0",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.2.11",
+    "vuetify": "^2.6.10",
     "vuex": "^3.4.0",
     "vuex-class": "^0.3.2",
     "vuex-module-decorators": "^1.0.1"
